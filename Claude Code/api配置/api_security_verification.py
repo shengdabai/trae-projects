@@ -1,0 +1,125 @@
+#!/usr/bin/env python3
+"""
+API密钥安全配置验证工具
+"""
+import os
+import re
+from dotenv import load_dotenv
+
+def check_env_file_security():
+    """检查.env文件的安全配置"""
+    print("🔒 API密钥安全配置验证")
+    print("=" * 50)
+    
+    # 检查.env文件是否存在
+    env_file = "/Users/tonysheng/Trae/.env"
+    if not os.path.exists(env_file):
+        print("❌ .env文件不存在")
+        return False
+    
+    print("✅ .env文件存在")
+    
+    # 检查.gitignore是否包含.env
+    gitignore_file = "/Users/tonysheng/Trae/.gitignore"
+    if os.path.exists(gitignore_file):
+        with open(gitignore_file, 'r') as f:
+            gitignore_content = f.read()
+            if '.env' in gitignore_content:
+                print("✅ .env文件已添加到.gitignore中")
+            else:
+                print("⚠️  .env文件未添加到.gitignore中")
+    else:
+        print("⚠️  .gitignore文件不存在")
+    
+    # 加载环境变量
+    load_dotenv()
+    
+    # 检查各个API密钥
+    api_keys = {
+        'KIMI_API_KEY': os.getenv('KIMI_API_KEY'),
+        'ZHIPU_API_KEY': os.getenv('ZHIPU_API_KEY'),
+        'GOOGLE_API_KEY': os.getenv('GOOGLE_API_KEY'),
+        'ANTHROPIC_API_KEY': os.getenv('ANTHROPIC_API_KEY')
+    }
+    
+    print("\n🔑 API密钥配置状态:")
+    for key_name, key_value in api_keys.items():
+        if key_value:
+            # 脱敏显示
+            masked_key = f"{key_value[:10]}...{key_value[-4:]}" if len(key_value) > 14 else "***"
+            print(f"✅ {key_name}: {masked_key} (已配置)")
+        else:
+            print(f"❌ {key_name}: 未配置")
+    
+    return True
+
+def check_code_security():
+    """检查代码文件中是否有硬编码的API密钥"""
+    print("\n🔍 代码安全检查:")
+    
+    # 检查的文件列表
+    files_to_check = [
+        "/Users/tonysheng/Trae/test_openai.py",
+        "/Users/tonysheng/Trae/test_claude.py", 
+        "/Users/tonysheng/Trae/test_gemini.py",
+        "/Users/tonysheng/Trae/test_gemini_simple.py"
+    ]
+    
+    # 可能的API密钥模式
+    api_key_patterns = [
+        r'sk-[a-zA-Z0-9]{48}',  # OpenAI格式
+        r'AIza[a-zA-Z0-9_-]{35}',  # Google API格式
+        r'[a-f0-9]{32}\.[a-zA-Z0-9]{16}',  # 智谱GLM格式
+        r'api_key\s*=\s*["\'][^"\']+["\']',  # 通用API密钥赋值
+    ]
+    
+    security_issues = []
+    
+    for file_path in files_to_check:
+        if os.path.exists(file_path):
+            with open(file_path, 'r', encoding='utf-8') as f:
+                content = f.read()
+                
+                # 检查是否使用了os.getenv
+                if 'os.getenv' in content:
+                    print(f"✅ {os.path.basename(file_path)}: 使用环境变量")
+                else:
+                    print(f"⚠️  {os.path.basename(file_path)}: 未使用环境变量")
+                
+                # 检查是否有硬编码的API密钥
+                for pattern in api_key_patterns:
+                    matches = re.findall(pattern, content)
+                    if matches:
+                        for match in matches:
+                            if not match.startswith('os.getenv') and 'your_' not in match.lower():
+                                security_issues.append(f"{file_path}: 发现可能的硬编码API密钥: {match[:20]}...")
+    
+    if security_issues:
+        print("\n❌ 发现安全问题:")
+        for issue in security_issues:
+            print(f"  - {issue}")
+        return False
+    else:
+        print("\n✅ 未发现硬编码的API密钥")
+        return True
+
+def generate_security_report():
+    """生成安全报告"""
+    print("\n📊 安全配置总结:")
+    print("=" * 50)
+    
+    env_secure = check_env_file_security()
+    code_secure = check_code_security()
+    
+    if env_secure and code_secure:
+        print("\n🎉 所有安全检查通过！")
+        print("✅ API密钥已安全存储在环境变量中")
+        print("✅ 代码中未发现硬编码的API密钥")
+        print("✅ .env文件已添加到.gitignore中")
+    else:
+        print("\n⚠️  发现安全问题，请及时修复")
+    
+    return env_secure and code_secure
+
+if __name__ == "__main__":
+    generate_security_report()

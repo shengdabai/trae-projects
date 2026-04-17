@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Kimi (Moonshot) via OpenAI-compatible API
+MOONSHOT_API_KEY="${MOONSHOT_API_KEY:-}"
+if [[ -z "${MOONSHOT_API_KEY}" ]]; then
+  echo "Missing MOONSHOT_API_KEY in environment" >&2
+  exit 1
+fi
+
+# Export OpenAI-compatible env for router
+export OPENAI_BASE_URL="https://api.moonshot.cn/v1"
+export OPENAI_API_KEY="$MOONSHOT_API_KEY"
+
+# Use Claude Code via router
+exec "$(dirname "$0")/claude" --model moonshot-v1-8k --dangerously-skip-permissions "$@"

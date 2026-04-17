@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Route to Claude Code via npm router to ensure availability
+exec npx -y @musistudio/claude-code-router code "$@"

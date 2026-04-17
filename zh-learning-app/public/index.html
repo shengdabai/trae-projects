@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>中文学习应用</title>
+    <style>
+      body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif; margin: 24px; }
+      h1 { font-size: 20px; }
+      .row { margin-top: 12px; }
+      input[type=text] { width: 100%; padding: 10px; font-size: 16px; }
+      select, button { padding: 8px 12px; font-size: 14px; }
+      .result { margin-top: 16px; padding: 12px; border: 1px solid #ddd; border-radius: 8px; }
+      .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace; }
+      table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+      th, td { border: 1px solid #eee; padding: 6px; text-align: left; }
+      .small { color: #666; font-size: 12px; }
+    </style>
+  </head>
+  <body>
+    <h1>中文学习应用（英→中 + 拼音 + 逐词英文）</h1>
+    <div class="row">
+      <input id="input" type="text" placeholder="请输入英文句子，例如：I wanna buy a coffee." />
+    </div>
+    <div class="row">
+      <label>粒度：</label>
+      <select id="granularity">
+        <option value="word">逐词</option>
+        <option value="char">逐字</option>
+      </select>
+      <button id="translate">生成</button>
+    </div>
+
+    <div id="result" class="result" style="display:none">
+      <div><strong>中文：</strong> <span id="zh"></span></div>
+      <div><strong>拼音：</strong> <span id="py" class="mono"></span></div>
+      <div class="small">标准化英文：<span id="norm" class="mono"></span></div>
+      <table>
+        <thead>
+          <tr><th>中文</th><th>拼音</th><th>英文释义</th></tr>
+        </thead>
+        <tbody id="segments"></tbody>
+      </table>
+    </div>
+
+    <script src="/app.js" type="module"></script>
+  </body>
+  </html>
