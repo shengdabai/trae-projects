@@ -12,7 +12,8 @@ def check_env_file_security():
     print("=" * 50)
     
     # 检查.env文件是否存在
-    env_file = "/Users/tonysheng/Trae/.env"
+    base_dir = os.path.expanduser("~/Trae")
+    env_file = os.path.join(base_dir, ".env")
     if not os.path.exists(env_file):
         print("❌ .env文件不存在")
         return False
@@ -20,7 +21,7 @@ def check_env_file_security():
     print("✅ .env文件存在")
     
     # 检查.gitignore是否包含.env
-    gitignore_file = "/Users/tonysheng/Trae/.gitignore"
+    gitignore_file = os.path.join(base_dir, ".gitignore")
     if os.path.exists(gitignore_file):
         with open(gitignore_file, 'r') as f:
             gitignore_content = f.read()
@@ -58,11 +59,12 @@ def check_code_security():
     print("\n🔍 代码安全检查:")
     
     # 检查的文件列表
+    base_dir = os.path.expanduser("~/Trae")
     files_to_check = [
-        "/Users/tonysheng/Trae/test_openai.py",
-        "/Users/tonysheng/Trae/test_claude.py", 
-        "/Users/tonysheng/Trae/test_gemini.py",
-        "/Users/tonysheng/Trae/test_gemini_simple.py"
+        os.path.join(base_dir, "test_openai.py"),
+        os.path.join(base_dir, "test_claude.py"),
+        os.path.join(base_dir, "test_gemini.py"),
+        os.path.join(base_dir, "test_gemini_simple.py")
     ]
     
     # 可能的API密钥模式
