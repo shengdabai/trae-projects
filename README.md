@@ -4,20 +4,20 @@ AI + Chinese-teaching tools built in public with Trae: gaokao AI tutor, EN↔ZH 
 
 ## Business Context
 
-- **Category:** security and governance tool
-- **Audience:** builders and operators who need safer repositories, cleaner handoffs, and repeatable security checks.
+- **Category:** AI workflow infrastructure
+- **Audience:** AI builders, creators, independent developers, and small teams that want repeatable local AI workflows.
 - **Repository status:** Public repository. Keep examples, docs, and issues free of credentials, private data, and machine-specific paths.
 - **Topics:** ai, chinese, collection, education, gaokao, learning, llm, python, trae
 
 ## What This Project Is For
 
 - AI + Chinese-teaching tools built in public with Trae: gaokao AI tutor, EN↔ZH learning app, and DIY Claude-style CLI agents.
-- Find repository risks early without exposing secrets in reports.
-- Make security review repeatable across public and private codebases.
+- Package repeatable AI workflows into reusable local assets.
+- Reduce one-off prompt work with versioned skills, guardrails, and handoff files.
 
 ## Where It Fits
 
-This repository belongs in the trust-and-safety layer of the workbench: it helps make code, configuration, and public handoffs safer before they are reused or shown to clients.
+This repository is part of a broader AI local-workbench operating model: reusable skills, local automation, auditable configuration, and repeatable delivery workflows.
 
 ## Technical Overview
 
