@@ -12,8 +12,8 @@ target/
 .cursor/
 .trae/
 .git/
+
 # Codex governance: local secrets and machine state
-.env
 .env.*
 !.env.example
 !.env.*.example
@@ -23,7 +23,17 @@ target/
 id_rsa
 id_dsa
 .npmrc
-.DS_Store
-.omc/
 .codex/
 .claude/local/
+
+# aider chat history (may contain conversation content and paths)
+*.aider.chat.history.md
+.aider.tags.cache.v*/
+
+# PDF-extracted text output (may contain exam content)
+knowledge_base/processed_text/
+
+# OS / editor
+*.swp
+*.swo
+.idea/

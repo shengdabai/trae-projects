@@ -1,1 +1,12 @@
-node_modules
+node_modules/
+dist/
+.env
+.env.local
+
+# aider chat history
+*.aider.chat.history.md
+.aider.tags.cache.v*/
+
+# model cache downloaded at runtime
+.cache/
+models/

@@ -1,3 +1,6 @@
+// NOTE: This server is designed as a LOCAL development tool.
+// If deploying to a public network, add Helmet for security headers and
+// configure CORS to restrict allowed origins before exposing any endpoints.
 import express from 'express'
 import path from 'path'
 import { fileURLToPath } from 'url'
@@ -47,6 +50,16 @@ const MAX_INPUT_LENGTH = 500
 const RATE_LIMIT_WINDOW_MS = 60 * 1000
 const RATE_LIMIT_MAX = 20
 const rateLimitMap = new Map()
+
+// Periodically evict expired rate-limit entries to prevent unbounded memory growth
+setInterval(() => {
+  const now = Date.now()
+  for (const [ip, entry] of rateLimitMap) {
+    if (now - entry.start > RATE_LIMIT_WINDOW_MS) {
+      rateLimitMap.delete(ip)
+    }
+  }
+}, RATE_LIMIT_WINDOW_MS).unref()
 
 function rateLimit(req, res, next) {
   const ip = req.ip || req.connection.remoteAddress || 'unknown'
