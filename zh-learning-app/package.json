@@ -11,5 +11,9 @@
     "express": "^5.1.0",
     "nodejieba": "^3.5.2",
     "pinyin-pro": "^3.27.0"
+  },
+  "overrides": {
+    "protobufjs": "^7.5.4",
+    "tar": "^7.5.22"
   }
 }
