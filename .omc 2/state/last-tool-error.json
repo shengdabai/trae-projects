@@ -1,0 +1,7 @@
+{
+  "tool_name": "Bash",
+  "tool_input_preview": "{\"command\":\"# AI创新应用设计\\nbash /tmp/push-project.sh \\\"/Users/tonysheng/Desktop/02-编程项目/编程/AI创新应用设计\\\" \\\"ai-innovative-app-design\\\" \\\"public\\\" \\\"AI innovative application design documents for fashion, emo...",
+  "error": "Exit code 128\nhttps://github.com/shengdabai/ai-innovative-app-design\nCreated repo: shengdabai/ai-innovative-app-design (public)\nInitialized empty Git repository in /Users/tonysheng/Desktop/02-编程项目/编程/AI创新应用设计/.git/\nInitialized git repo\nerror: 'AI情绪运动教练/ai-outfit-assistant/' does not have a commit checked out\nfatal: adding files failed",
+  "timestamp": "2026-04-17T00:27:41.512Z",
+  "retry_count": 1
+}
